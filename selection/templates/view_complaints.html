@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .complaint {
+        border: 2px solid black;
+        padding: 20px;
+       
+      }
+      .complaint-section {
+        border: 2px solid #ccc;
+        padding: 20px;
+        background-color: #fff;
+      }
+      .complaint h3 {
+        font-weight: bold;
+      }
+      .button-custom {
+        display: inline-block;
+        margin-left: 0;
+      }
+      
+      
+      
+</style>
+
+
+<div class="complaints-section">
+    <h2>Complaints</h2>
+    
+    <!-- Add this form for search -->
+    <form method="GET" action="">
+        <input type="text" name="q" placeholder="Search complaints...">
+        {% comment %} <input type="submit" value="Search"> {% endcomment %}
+    </form>
+    
+    {% for complaint in complaints %}
+        <div class="complaint">
+            <h3 style="font-weight: 500px;">Complaint from {{ complaint.user.username }}</h3>
+            <p>Complaint: {{ complaint.text }}</p>
+            <p>Submitted at: {{ complaint.created }}</p>
+            
+            <p>Updated at: {{ complaint.updated }}</p>
+            {% if request.user == complaint.user %}
+            
+                <a href="{% url 'delete_complaint' complaint.id %}" class="button-custom">Delete</a>
+                <a href="{% url 'update_complaint' complaint.id %}" class="button-custom">Update</a>
+            {% endif %}
+        </div>
+        
+    {% empty %}
+        <p>No complaints to show.</p>
+    {% endfor %}
+    
+</div>
+{% endblock content %}

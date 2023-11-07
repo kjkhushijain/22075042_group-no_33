@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  th{
+    font-size:1.2em;
+  }
+  .hostel_name{
+    font-size:1.5em;
+    font-weight:Bold;
+    text-transform: uppercase;
+  }
+  .hostel-day{
+    text-transform: uppercase;
+
+  }
+</style>
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<div class="container mt-5">
+  <div class="table-responsive">
+    <input type="search" id="search-bar" placeholder="Search hostels..." class="form-control mb-3">
+    <table class="table table-striped table-hover">
+      <thead class="table-header">
+        <tr>
+          {% comment %} <th>Hostel Name</th> {% endcomment %}
+          
+         
+          <th>Day</th>
+          <th>Breakfast</th>
+          <th>Lunch</th>
+          <th>Dinner</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        {% for hostel in hostels %}
+          <tr class="hostel-row">
+            <td class="hostel_name">
+              
+              {{ hostel.name }} 
+            </td>
+            <td class="hostel_name">{{ hostel.caretaker }}</td>
+            
+          </tr>
+          {% for day, menu in hostel.menu.items %}
+            <tr class="menu-row" data-hostel="{{ hostel.name }}">
+              <td class="hostel-day">{{ day }}</td>
+              <td>
+                {% comment %} <img src="{% static 'images/breakfast-icon.png' %}" class="table-icon"> {% endcomment %}
+                {{ menu.breakfast }}
+              </td>
+              <td>
+                
+                {{ menu.lunch }}
+              </td>
+              <td>
+               
+                {{ menu.dinner }}
+              </td>
+            </tr>
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  var searchBar = document.getElementById('search-bar');
+  var menuRows = document.querySelectorAll('.menu-row');
+
+  searchBar.addEventListener('input', function() {
+    var searchTerm = searchBar.value.toLowerCase();
+
+    menuRows.forEach(function(menuRow) {
+      var hostelName = menuRow.getAttribute('data-hostel').toLowerCase();
+
+      if (hostelName.includes(searchTerm)) {
+        menuRow.style.display = 'table-row';
+      } else {
+        menuRow.style.display = 'none';
+      }
+    });
+  });
+</script>
+{% endblock content %}

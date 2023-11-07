@@ -1,0 +1,43 @@
+.table-hover tbody tr:hover {
+    color: #1d2124;
+    background-color: #d4e2e7;
+  }
+  .table {
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 0;
+  }
+  .table th,
+  .table td {
+    padding: 10px 8px;
+  }
+  .table-header {
+    background-color: #f2f2e7;
+  }
+  .table-icon {
+    width: 20px;
+    height: 20px;
+  }
+  .hostel-divider {
+    border-bottom: 1px solid #ccc;
+  }
+  .hostel-name {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 300px;
+  }
+  .hostel-photo {
+    width: 10px;
+    height: 10px;
+  }
+  img {
+    border: 1px solid black;
+    width: 10px;
+    height: 10px;;
+    opacity: 0.5;
+    filter: grayscale(100%);
+  }
+  
+  img:hover {
+    transform: scale(1.2);
+  }

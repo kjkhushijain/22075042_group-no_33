@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  .complaint {
+    border: 1px solid black;
+    margin-bottom: 10px;
+  }
+  h2{
+   text-align:center;
+   font-size:40px;
+  }
+  
+</style>
+  <h2>Complaints</h2>
+  
+  
+
+      <div class="wrapper">
+
+        <div class="table">
+
+            <div class="row header">
+                  <div class="cell">
+                      User
+                  </div>
+                  <div class="cell">
+                      Complaint
+                  </div>
+                  <div class="cell">
+                    Date & Time
+                </div>
+                  <div class="cell">
+                      Action
+                  </div>
+              </div>
+
+                {% for complaint in complaints %}
+                <div class="row">
+                      
+                      <div class="cell" >
+                            {{ complaint.user }}
+                      </div>
+                      
+                      <div class="cell" >
+                              {{ complaint.text }}
+                      </div> 
+                      <div class="cell" >
+                        {{ complaint.created}}
+                </div> 
+                      
+                      <div class="cell">
+                          <a href="{% url 'warden_delete_complaint' complaint.id %}" class="button-custom">Delete</a>
+                      </div>
+                 </div>
+                 {% endfor %}
+                  
+              
+                 
+               
+                
+           </div>
+               
+       </div>
+      
+   
+ 
+{% endblock %}

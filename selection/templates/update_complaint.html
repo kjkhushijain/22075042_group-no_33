@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .button-container {
+        width: 700px;
+        flaot:center;
+        margin: 0 auto;
+        display: block;
+      }
+      
+      .button-custom {
+        width: 150%;
+        text-align: center;
+      }
+      
+      
+</style>
+
+<h1>Update Complaint</h1>
+
+<form action="{% if form.is_valid %}{% url 'update_complaint' complaint.id %}{% endif %}" method="post">
+  {% csrf_token %}
+  {{ form }}
+  
+  <div class="button-container">
+    <button class="button-custom">Update Complaint</button>
+  </div>
+  
+</form>
+
+{% endblock content %}

@@ -1,0 +1,291 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .resolved-complaint p {
+        font-weight: bold;
+        text-align: center;
+      }
+      
+      .resolved-complaint:hover {
+        background-color: lightsteelblue;
+        border: 2px solid black;
+        font-size: 18px;
+      }
+      
+    .resolved-complaint {
+        border: 1px solid #0066b2;
+        padding: 5px;
+        margin:5px;
+      }
+      
+    .table{
+        margin-left:-5x;
+        top:350px;
+    }
+   
+    .complaint-bar {
+        position: absolute;
+        top: 140px;
+        left: 55px;
+        width: 300px; 
+        height: 220px; 
+        border-radius:25px;
+        overflow: auto; 
+        border: 1px solid #000; 
+        padding: 20px; 
+        background-color: #f5f5f5;
+        box-shadow: 0px 0px 10px #888888;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        text-align:center;
+        
+        color: #333;
+    }
+    .reply-bar {
+        position: absolute;
+        top: 140px;
+        right: 55px;
+        width: 300px; 
+        height: 520px; 
+        border-radius:25px;
+        overflow: auto; 
+        border: 1px solid #000; 
+        padding: 20px; 
+        background-color: #f5f5f5;
+        box-shadow: 0px 0px 10px #888888;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        text-align:center;
+        
+        color: #333;
+    }
+    .complaint-bar h2 {
+        font-size: 18px;
+        margin-top: 0;
+    }
+    .complaint-bar form {
+        margin-top: 20px;
+    }
+    .complaint-bar input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    .complaint-bar input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .complaint-bar input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+    .complaint-bar a {
+        display: block;
+        margin-top: 20px;
+        color: #333;
+        text-decoration: none;
+    }
+    .complaint-bar a:hover {
+        text-decoration: underline;
+    }
+    .complaint-bar .complaint-submitted {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    .complaint-bar .complaint-submitted h3 {
+        margin-top: 0;
+        font-size: 16px;
+    }
+    .complaint-bar .complaint-submitted p {
+        margin-bottom: 0;
+    }
+</style>
+    <div class="wrapper">
+        <div class="table" >
+            <div class="row">
+                <div class="cell">
+                   
+                    Student Image
+                   
+                </div>
+                <div class="cell">
+                    {% if student.student_image %}
+                        <img src="{{ student.student_image.url }}" alt="Student Image" style="max-width: 100%; height: 150px;  border: 2px solid black;">
+                    {% else %}
+                        no image available
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="cell">
+                    Name
+                </div>
+                <div class="cell">
+                    {{ student.student_name }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="cell">
+                    Father's Name
+                </div>
+                <div class="cell">
+                    {{ student.father_name }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="cell">
+                    Enrollment Number
+                </div>
+                <div class="cell">
+                    {{ student.enrollment_no }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="cell">
+                    Date of birth (yyyy-mm-dd)
+                </div>
+                <div class="cell">
+                    {{ student.dob }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="cell">
+                    Gender
+                </div>
+                <div class="cell">
+                    {{ student.gender }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="cell">
+                    Course
+                </div>
+                <div class="cell">
+                    {{ student.course }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="cell">
+                    hostel
+                </div>
+                <div class="cell">
+                    {{ student.hostel }}
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="cell">
+                    Room
+                </div>
+                <div class="cell">
+                    {% if student.room_allotted %} {{ student.room }} in {{ student.room.hostel }}
+                    {% else %} Not Allotted
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="cell">
+                    Dues
+                </div>
+                <div class="cell">
+                    {% if student.no_dues %} <div style="color: green">No Dues</div>
+                    {% else %} <div style="color: red">Unpaid Dues</div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="cell">
+                    Due Amount
+                </div>
+                <div class="cell">
+                    {{ student.due_amount }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="cell">
+                    Document
+                </div>
+                <div class="cell">
+                    {% if student.document %}
+                        <a href="{{ student.document.url }}">{{ student.document.name }}</a>
+                    {% else %}
+                        No document uploaded
+                    {% endif %}
+                </div>
+            </div>
+            
+            
+
+        </div>
+        {% if not user.student_profile.room_allotted %}
+        <a class="button-custom" href="{% url 'select' %}">
+            Select a Room
+        </a>
+        {% endif %}
+    </div>
+<br><br><br><br><br><br><br><br>
+    <div>
+
+
+
+        <div class="complaint-bar">
+            <h2>Submit a Complaint</h2>
+            <form action="{% url 'submit_complaint' %}" method="POST">
+              {% csrf_token %}
+              <input name="text" placeholder="Enter your complaint here..."></input>
+              
+            </form>
+          
+            <a href="{% url 'register_complaints' %}" class="button-custom">Registered Complaints</a>
+          
+           
+          </div>
+          <div class="reply-bar">
+                <h2>Resolved Complaints</h2>
+                {% for complaint in resolved_complaints %}
+                <div class="resolved-complaint">
+                    <p> Complaint: {{ complaint.text }}</p>
+                    <p>Resolved at: {{ complaint.resolved_at }}</p>
+                </div>
+                {% empty %}
+                <p>No resolved complaints.</p>
+                {% endfor %}
+            </div>
+            
+          
+           
+          </div>
+          
+
+    </div>
+
+
+
+
+
+{% endblock content %}
+
+
+{% block more_links %}
+    <a href="{% url 'edit' %}">
+            Update Details
+        </a>
+        {% if not user.student_profile.room_allotted %}
+        <a href="{% url 'select' %}">
+            Select a Room
+        </a>
+        {% endif %}
+        
+{% endblock more_links %}

@@ -1,0 +1,25 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h1>Resolved Complaints</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Complaint Text</th>
+        <th>Resolved At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for complaint in resolved_complaints %}
+        <tr>
+          <td>{{ complaint.text }}</td>
+          <td>{{ complaint.resolved_at }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="2">No resolved complaints.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

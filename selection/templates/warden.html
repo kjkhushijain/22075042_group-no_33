@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="wrapper">
+
+        <div class="table">
+
+            <div class="row header">
+                <div class="cell">
+                    Room Number
+                </div>
+                <div class="cell">
+                    Room Id
+                </div>
+                <div class="cell">
+                    Type
+                </div>
+                <div class="cell">
+                    Dues
+                </div>
+                <div class="cell">
+                    Status
+                </div>
+                <div class="cell">
+                    Allotted To
+                </div>
+            </div>
+            {% for student in students %}
+                <div class="row">
+                    <div class="cell" data-title="Number">
+                        {{ student.room.no }}
+                    </div>
+                    <div class="cell" data-title="Name">
+                        {{ student.room.name }}
+                    </div>
+                    <div class="cell" data-title="Type">
+                        {{ student.room.room_type }}
+                    </div>
+                    <div class="cell" data-title="Type">
+                        {{ student.due_amount}}
+                    </div>
+                    <div class="cell" style="{% if student.room.vacant %} color: green {% endif %}" data-title="Status">
+                        {% if student.room.vacant %} vacant {% else %} occupied {% endif %}
+                    </div>
+                    <div class="cell">
+                        {% if student.room.vacant %}
+                            -
+                        {% else %}
+                            <div class="box">
+                                <a class="button" href="#popup{{forloop.counter}}">{{ student }}</a>
+                            </div>
+
+                            <div id="popup{{forloop.counter}}" class="overlay">
+                                <div class="popup">
+                                    <h2>Student Details</h2>
+                                    <a class="close" href="#">&times;</a>
+                                    <div class="content">
+                                        <div class="table">
+                                            <div class="row">
+                                                <div class="cell">
+                                                    Student image
+                                                </div>
+                                                <div class="cell">
+                                                    {% if student.student_image %}
+                                                    <img src="{{ student.student_image.url }}" alt="Student Image" style="max-width: 100%; height: 150px;  border: 2px solid black;">
+                                                {% else %}
+                                                    no image available
+                                                {% endif %}
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="cell">
+                                                    Student Name
+                                                </div>
+                                                <div class="cell">
+                                                    {{ student.student_name }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="cell">
+                                                    Father's Name
+                                                </div>
+                                                <div class="cell">
+                                                    {{ student.father_name }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="cell">
+                                                    Enrollment Number
+                                                </div>
+                                                <div class="cell">
+                                                    {{ student.course }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="cell">
+                                                    Date of birth (yyyy-mm-dd)
+                                                </div>
+                                                <div class="cell">
+                                                    {{ student.dob }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="cell">
+                                                    Gender
+                                                </div>
+                                                <div class="cell">
+                                                    {{ student.gender }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+ 
+{% endblock content %}
+
+
+{% block more_links %}
+{% comment %} <a href="{% url 'warden_profile' %}">
+    Profile
+</a> {% endcomment %}
+    <a href="{% url 'warden_dues' %}">
+       No Dues
+    </a>
+    <a href="{% url 'warden_add_due' %}">
+        Add Due
+    </a>
+    <a href="{% url 'warden_remove_due' %}">
+        Remove Due
+    </a>
+    <a href="{% url 'warden_view_complaints' %}">
+        Complaints
+    </a>
+    <a href="{% url 'logout' %}">
+        Logout
+    </a>
+    
+{% endblock more_links %}
