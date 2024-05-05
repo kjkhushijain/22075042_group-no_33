@@ -1,4 +1,4 @@
-# Hostel-Managment-System using Python.
+# Hostel-Managment-System using Django.
 # Hostel Management System
 
 
